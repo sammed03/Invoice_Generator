@@ -13,17 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let logoData = null;
     let invoiceNumber = 1;
 
-    
     invoiceNumberField.value = `INV-${invoiceNumber}`;
 
-    
     addItemButton.addEventListener('click', addNewItem);
     logoUpload.addEventListener('change', handleLogoUpload);
     removeLogoBtn.addEventListener('click', removeLogo);
     generatePDFButton.addEventListener('click', () => generatePDF(false));
     printInvoiceButton.addEventListener('click', () => generatePDF(true));
 
-    
     function addNewItem() {
         itemCount++;
         const newRow = itemsTable.insertRow();
@@ -36,13 +33,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <td><button type="button" class="bg-red-500 text-white px-4 py-2 rounded removeItem">Remove</button></td>
         `;
 
-        
         newRow.querySelector('.removeItem').addEventListener('click', function() {
             newRow.remove();
             updateTotals();
         });
 
-        
         newRow.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', updateRowTotal);
         });
@@ -50,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTotals();
     }
 
-    
     function updateRowTotal(event) {
         const row = event.target.closest('tr');
         const quantity = parseFloat(row.querySelector('input[name="quantity"]').value) || 0;
@@ -60,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
         updateTotals();
     }
 
-    
     function updateTotals() {
         let subtotal = 0;
         document.querySelectorAll('#invoiceItems tbody .amount').forEach(cell => {
@@ -75,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('grandTotal').value = grandTotal.toFixed(2);
     }
 
-    
     function handleLogoUpload(event) {
         const file = event.target.files[0];
         if (file) {
@@ -89,14 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    
     function removeLogo() {
         logoData = null;
         logoPreview.innerHTML = '';
         removeLogoBtn.classList.add('hidden');
     }
 
-    
     function validateForm() {
         const businessName = document.getElementById('businessName').value.trim();
         const address = document.getElementById('address').value.trim();
@@ -143,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return isValid;
     }
 
-    
     function generatePDF(shouldPrint = false) {
         if (!validateForm()) {
             return;
